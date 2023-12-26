@@ -1,5 +1,7 @@
 from django.db import models
-# Create your models here.
+
+
+
 class room_details(models.Model):
     room_name = models.CharField(max_length=500)
     reffer_code = models.IntegerField()
