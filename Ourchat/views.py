@@ -17,13 +17,14 @@ def getroom(request):
         username = request.POST['username']
         showmessage = messege_details.objects.filter(m_room=room_name)
         if not room_name or not reffer_code or not username:
-            messages.error(request,"Username or Roomname Invalid")
+            messages.error(request,"Username or Roomname can not be empty")
             return redirect('/')
         if room_details.objects.filter(room_name=room_name).exists():
             #return redirect('/'+room+'/?username='+username)
             thetime = timezone.now() - timedelta(minutes=1)
             messege_details.objects.filter(m_time__lt=thetime).delete()
             context ={'room_name':room_name,'username':username,'showmessage':showmessage}
+            messages.success(request, f"Got existing room {room_name}")
             return render(request,'room.html',context)
         else:
             createroom= room_details(room_name=room_name,reffer_code=reffer_code,username=username)
